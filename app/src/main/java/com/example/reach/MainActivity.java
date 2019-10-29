@@ -9,9 +9,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+
     final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         //get toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
     }
     @Override
@@ -37,5 +47,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
         }
         return true;
+    }
+
+    public void onMapReady(GoogleMap map){
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target(new LatLng(43.473868, -80.525318))
+                .zoom(13)
+                .build();
+
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 }
