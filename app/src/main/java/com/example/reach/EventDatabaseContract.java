@@ -14,7 +14,7 @@ public class EventDatabaseContract {
         public static final String user_id = "USER_ID";
         public static final String email = "EMAIL";
         public static final String pwd = "PASSWORD";
-        public static final String usrnme = "USERNAME";
+        public static final String username = "USERNAME";
 
         //Event table column names
         public static final String event_id = "EVENT_ID";

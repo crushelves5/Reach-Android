@@ -8,13 +8,14 @@ import android.util.Log;
 import java.util.Date;
 
 public class EventDatabaseHelper extends SQLiteOpenHelper{
-    static String DATABASE_NAME = "";
-    static int VERSION_NUM = 1;
+    static String DATABASE_NAME = "Reach";
+    static int VERSION_NUM = 3;
+
 
     public static final String SQL_CREATE_ENTRIES_USER =
-            "CREATE TABLE " +  EventDatabaseContract.EventEntry.tblUser_name + " (" + EventDatabaseContract.EventEntry.user_id + "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "CREATE TABLE " +  EventDatabaseContract.EventEntry.tblUser_name + " (" + EventDatabaseContract.EventEntry.user_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     EventDatabaseContract.EventEntry.email + " TEXT," +
-                    EventDatabaseContract.EventEntry.usrnme + " TEXT," +
+                    EventDatabaseContract.EventEntry.username + " TEXT," +
                     EventDatabaseContract.EventEntry.pwd + " TEXT)";
 
 
@@ -43,6 +44,12 @@ public class EventDatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(SQL_CREATE_ENTRIES_USER);
+        ContentValues contentValues = new ContentValues();
+        //Insert Users
+        contentValues.put(EventDatabaseContract.EventEntry.username, "user1");
+        contentValues.put(EventDatabaseContract.EventEntry.pwd,"1234");
+        contentValues.put(EventDatabaseContract.EventEntry.email,"email@gmail.com");
+        db.insert(EventDatabaseContract.EventEntry.tblUser_name, "NullPlaceHolder", contentValues);
     }
 
     @Override
@@ -56,7 +63,7 @@ public class EventDatabaseHelper extends SQLiteOpenHelper{
     }
     public String dropTable(String name)
     {
-        String query = "DROP TABLE IF EXISTS" + name;
+        String query = "DROP TABLE IF EXISTS " + name;
         return query;
     }
 
@@ -65,7 +72,7 @@ public class EventDatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(EventDatabaseContract.EventEntry.email, email);
-        contentValues.put(EventDatabaseContract.EventEntry.usrnme, username);
+        contentValues.put(EventDatabaseContract.EventEntry.username, username);
         contentValues.put(EventDatabaseContract.EventEntry.pwd, password);
 
         Log.d("WEW LAD", "addUser: Adding " + email + "/" + username + "/" + password + " to " + EventDatabaseContract.EventEntry.tblUser_name);
