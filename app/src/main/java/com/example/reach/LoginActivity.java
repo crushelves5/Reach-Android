@@ -2,6 +2,7 @@ package com.example.reach;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +19,10 @@ public class LoginActivity extends AppCompatActivity {
     final String TAG="LoginActivitiy";
     ProgressBar progressBar;
     Button loginButton;
+
+    public LoginActivity(Context context){
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
             String password = strings [1];
             publishProgress(25);
             String query = "SELECT "+EventDatabaseContract.EventEntry.user_id+" FROM " +EventDatabaseContract.EventEntry.tblUser_name+" WHERE EMAIL = '"+emailinput+"' AND PASSWORD = '"+password+"';";
-            Log.d(TAG, "doInBackground: "+query);
             EventDatabaseHelper dbhelper = new EventDatabaseHelper(LoginActivity.this);
             SQLiteDatabase database = dbhelper.getReadableDatabase();
             publishProgress(50);
@@ -112,5 +116,12 @@ public class LoginActivity extends AppCompatActivity {
 
             return null;
         }
+    }
+    boolean is_valid(String email, String password){
+        if (email.equals("email@gmail.com") && password.equals("1234")){
+            return true;
+        }
+        return false;
+
     }
 }
